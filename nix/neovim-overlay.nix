@@ -41,9 +41,12 @@ with final.pkgs.lib; let
     plenary-nvim
     lazydev-nvim
     luvit-meta
-
+    trouble-nvim
+    nui-nvim
+    nvim-lint
     rustaceanvim
 
+    conform-nvim
     lualine-nvim
 
     # https://github.com/onsails/lspkind.nvim
