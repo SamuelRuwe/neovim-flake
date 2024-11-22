@@ -4,7 +4,6 @@
 ---LSP related functions
 ---@brief ]]
 
-print('hello from lsp')
 local M = {}
 
 ---Gets a 'ClientCapabilities' object, describing the LSP client capabilities

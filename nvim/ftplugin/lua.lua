@@ -1,4 +1,3 @@
-print('hello from lua ft plugin')
 vim.bo.comments = ':---,:--'
 
 local lua_ls_cmd = 'lua-language-server'
