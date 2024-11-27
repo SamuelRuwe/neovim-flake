@@ -18,11 +18,16 @@ local root_files = {
   '.git',
 }
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local cmp_lsp = require('cmp_nvim_lsp')
+local cmp_lsp_capabilities = cmp_lsp.default_capabilities()
+capabilities = vim.tbl_deep_extend('keep', capabilities, cmp_lsp_capabilities)
+
 vim.lsp.start {
   name = 'luals',
   cmd = { lua_ls_cmd },
   root_dir = vim.fs.dirname(vim.fs.find(root_files, { upward = true })[1]),
-  capabilities = require('sam.lsp').make_client_capabilities(),
+  capabilities = capabilities,
   settings = {
     Lua = {
       runtime = {
