@@ -3,8 +3,6 @@ telescope.setup {}
 
 local builtin = require('telescope.builtin')
 
-vim.keymap.set('n', '<leader><leader>', builtin.find_files, { desc = 'Find Files' })
-
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]earch [F]iles' })
 vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>fb>', builtin.buffers, { desc = '[F]ind existing [B]uffers' })

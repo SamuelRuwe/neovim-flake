@@ -46,6 +46,7 @@ with final.pkgs.lib; let
     nvim-lint
     rustaceanvim
     fidget-nvim
+    flash-nvim
 
     conform-nvim
     lualine-nvim
