@@ -43,6 +43,8 @@ with final.lib; let
 
     conform-nvim
     lualine-nvim
+    neotest
+    neotest-jest
 
     lspkind-nvim
     nvim-web-devicons
