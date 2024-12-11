@@ -47,6 +47,7 @@ with final.lib; let
     lspkind-nvim
     nvim-web-devicons
     neo-tree-nvim
+    telescope-fzf-native-nvim
   ];
 
   extraPackages = with final; [

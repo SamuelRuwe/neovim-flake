@@ -1,5 +1,11 @@
 local telescope = require('telescope')
-telescope.setup {}
+telescope.setup {
+  extensions = {
+    fzf = {},
+  },
+}
+
+telescope.load_extension('fzf')
 
 local builtin = require('telescope.builtin')
 
@@ -20,6 +26,7 @@ vim.keymap.set(
   '<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>',
   { desc = 'Switch Buffer' }
 )
+
 vim.keymap.set('n', '<leader>:', builtin.command_history, { desc = 'Command History' })
 vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = '[F]ind [Git] Files (git-files)' })
 vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = '[Git] [C]ommits' })
