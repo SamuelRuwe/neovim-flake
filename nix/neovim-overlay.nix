@@ -1,21 +1,14 @@
-# This overlay, when applied to nixpkgs, adds the final neovim derivation to nixpkgs.
 {inputs}: final: prev:
-with final.pkgs.lib; let
-  pkgs = final;
+with final.lib; let
 
   # Use this to create a plugin from a flake input
   mkNvimPlugin = src: pname:
-    pkgs.vimUtils.buildVimPlugin {
+    final.vimUtils.buildVimPlugin {
       inherit pname src;
       version = src.lastModifiedDate;
     };
 
-  # Make sure we use the pinned nixpkgs instance for wrapNeovimUnstable,
-  # otherwise it could have an incompatible signature when applying this overlay.
-  pkgs-wrapNeovim = inputs.nixpkgs.legacyPackages.${pkgs.system};
-
-  # This is the helper function that builds the Neovim derivation.
-  mkNeovim = pkgs.callPackage ./mkNeovim.nix { inherit pkgs-wrapNeovim; };
+  mkNeovim = final.callPackage ./mkNeovim.nix { pkgs = final.pkgs; lib = final.lib; stdenv = final.stdenv; };
 
   # A plugin can either be a package or an attrset, such as
   # { plugin = <plugin>; # the package, e.g. pkgs.vimPlugins.nvim-cmp
@@ -26,7 +19,7 @@ with final.pkgs.lib; let
   #   ...
   # }
 
-  all-plugins = with pkgs.vimPlugins; [
+  all-plugins = with final.vimPlugins; [
     nvim-lspconfig
     telescope-nvim
     tokyonight-nvim
@@ -51,52 +44,30 @@ with final.pkgs.lib; let
     conform-nvim
     lualine-nvim
 
-    # https://github.com/onsails/lspkind.nvim
     lspkind-nvim
     nvim-web-devicons
     neo-tree-nvim
   ];
 
-  extraPackages = with pkgs; [
-    # language servers, etc.
+  extraPackages = with final; [
     lua-language-server
-    nil # nix LSP
+    nil
     lazygit
     fd
     ripgrep
     gcc
     luarocks
     stylua
-
-    # packages with results in /lib/node_modules/.bin must come at the end
     nodePackages.typescript
     nodePackages.typescript-language-server
   ];
 in {
-  # This is the neovim derivation
-  # returned by the overlay
   nvim-pkg = mkNeovim {
     plugins = all-plugins;
     inherit extraPackages;
   };
 
-  # This can be symlinked in the devShell's shellHook
   nvim-luarc-json = final.mk-luarc-json {
     plugins = all-plugins;
   };
-
-  # You can add as many derivations as you like.
-  # Use `ignoreConfigRegexes` to filter out config
-  # files you would not like to include.
-  #
-  # For example:
-  #
-  # nvim-pkg-no-telescope = mkNeovim {
-  #   plugins = [];
-  #   ignoreConfigRegexes = [
-  #     "^plugin/telescope.lua"
-  #     "^ftplugin/.*.lua"
-  #   ];
-  #   inherit extraPackages;
-  # };
 }

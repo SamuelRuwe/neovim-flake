@@ -5,6 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     gen-luarc.url = "github:mrcjkb/nix-gen-luarc-json";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
   outputs = inputs @ {
@@ -12,6 +13,7 @@
     nixpkgs,
     flake-utils,
     gen-luarc,
+    neovim-nightly-overlay,
     ...
   }: let
     supportedSystems = [
@@ -22,11 +24,14 @@
     ];
 
     neovim-overlay = import ./nix/neovim-overlay.nix {inherit inputs;};
+    neovim-nightly = neovim-nightly-overlay.overlays.default;
+
   in
     flake-utils.lib.eachSystem supportedSystems (system: let
       pkgs = import nixpkgs {
         inherit system;
         overlays = [
+          neovim-nightly
           neovim-overlay
           gen-luarc.overlays.default
         ];
