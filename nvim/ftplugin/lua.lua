@@ -24,7 +24,7 @@ local cmp_lsp_capabilities = cmp_lsp.default_capabilities()
 capabilities = vim.tbl_deep_extend('keep', capabilities, cmp_lsp_capabilities)
 
 vim.lsp.start {
-  name = 'luals',
+  name = 'lua_ls',
   cmd = { lua_ls_cmd },
   root_dir = vim.fs.dirname(vim.fs.find(root_files, { upward = true })[1]),
   capabilities = capabilities,
@@ -34,7 +34,6 @@ vim.lsp.start {
         version = 'LuaJIT',
       },
       diagnostics = {
-        -- Get the language server to recognize the `vim` global, etc.
         globals = {
           'vim',
           'describe',

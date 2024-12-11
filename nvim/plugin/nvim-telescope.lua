@@ -51,7 +51,7 @@ vim.keymap.set('n', '<leader>so', builtin.vim_options, { desc = '[S]earch [O]pti
 vim.keymap.set('n', '<leader>sq', builtin.quickfix, { desc = '[S]earch [Q]uickfix List' })
 
 local plugin_path = vim.g.sams_super_secret_plugin_path
-if plugin_path ~= nil then
+if plugin_path then
   vim.keymap.set('n', '<space>fp', function()
     builtin.find_files {
       follow = true,
