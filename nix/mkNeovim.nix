@@ -58,6 +58,14 @@ with lib;
       '';
     };
 
+  mkEntryFromDrv = drv:
+    if lib.isDerivation drv then
+      { name = "${lib.getName drv}"; path = drv; }
+    else 
+      drv;
+
+   pluginPath = pkgs.linkFarm "plugin_path" (builtins.map mkEntryFromDrv plugins);
+    
     # The final init.lua content that we pass to the Neovim wrapper.
     # It wraps the user init.lua, prepends the lua lib directory to the RTP
     # and prepends the nvim and after directory to the RTP
@@ -73,6 +81,7 @@ with lib;
       + ''
         vim.opt.rtp:prepend('${nvimRtp}/nvim')
         vim.opt.rtp:prepend('${nvimRtp}/after')
+        vim.g.sams_super_secret_plugin_path = '${pluginPath}'
       '';
 
     # Add arguments to the Neovim wrapper script
@@ -101,8 +110,6 @@ with lib;
       optionalString (resolvedExtraLuaPackages != [])
       ''--suffix LUA_PATH ";" "${concatMapStringsSep ";" luaPackages.getLuaPath resolvedExtraLuaPackages}"'';
 
-    # wrapNeovimUnstable is the nixpkgs utility function for building a Neovim derivation.
-    # neovim-wrapped = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (neovimConfig
     neovim-wrapped = pkgs.wrapNeovimUnstable pkgs.neovim (neovimConfig
       // {
         luaRcContent = initLua;

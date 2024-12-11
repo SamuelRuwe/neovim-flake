@@ -1,5 +1,10 @@
 local telescope = require('telescope')
 telescope.setup {
+  pickers = {
+    find_files = {
+      theme = 'ivy',
+    },
+  },
   extensions = {
     fzf = {},
   },
@@ -44,3 +49,13 @@ vim.keymap.set('n', '<leader>sM', builtin.man_pages, { desc = '[S]earch [M]an Pa
 vim.keymap.set('n', '<leader>sm', builtin.marks, { desc = '[S]earch [Marks]' })
 vim.keymap.set('n', '<leader>so', builtin.vim_options, { desc = '[S]earch [O]ptions' })
 vim.keymap.set('n', '<leader>sq', builtin.quickfix, { desc = '[S]earch [Q]uickfix List' })
+
+local plugin_path = vim.g.sams_super_secret_plugin_path
+if plugin_path ~= nil then
+  vim.keymap.set('n', '<space>fp', function()
+    builtin.find_files {
+      follow = true,
+      cwd = plugin_path,
+    }
+  end, { desc = '[Find] [P]lugins' })
+end
