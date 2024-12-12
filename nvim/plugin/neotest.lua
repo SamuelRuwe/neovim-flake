@@ -6,12 +6,15 @@ neotest.setup {
 }
 
 vim.keymap.set('n', '<leader>t', '', { desc = '+test' })
+
 vim.keymap.set('n', '<leader>tt', function()
   neotest.run.run(vim.fn.expand('%'))
 end, { desc = 'Run File (Neotest)' })
+
 vim.keymap.set('n', '<leader>tT', function()
   neotest.run.run(vim.uv.cwd())
 end, { desc = 'Run All Test Files (Neotest)' })
+
 vim.keymap.set('n', '<leader>tr', function()
   neotest.run.run()
 end, { desc = 'Run Nearest (Neotest)' })
