@@ -15,6 +15,10 @@ telescope.load_extension('fzf')
 local builtin = require('telescope.builtin')
 
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]earch [F]iles' })
+vim.keymap.set('n', '<leader>fr', function()
+  builtin.oldfiles { cwd = vim.uv.cwd() }
+end, { desc = '[F]earch [R]ecent Files' })
+
 vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>fb>', builtin.buffers, { desc = '[F]ind existing [B]uffers' })
 vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
