@@ -23,3 +23,14 @@ lspconfig.ts_ls.setup {
     },
   },
 }
+
+lspconfig.lua_ls.setup {
+  capabilities = blink.get_lsp_capabilities(),
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { 'bit', 'it', 'describe', 'before_each', 'after_each' },
+      },
+    },
+  },
+}
