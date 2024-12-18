@@ -21,14 +21,10 @@ with final.lib; let
 
   all-plugins = with final.vimPlugins; [
     nvim-lspconfig
+    blink-cmp
     telescope-nvim
     tokyonight-nvim
-    nvim-cmp
     luasnip
-    cmp-path
-    cmp-buffer
-    cmp_luasnip
-    cmp-nvim-lsp
     nvim-treesitter.withAllGrammars
     which-key-nvim
     plenary-nvim

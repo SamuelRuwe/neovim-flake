@@ -6,6 +6,9 @@
     flake-utils.url = "github:numtide/flake-utils";
     gen-luarc.url = "github:mrcjkb/nix-gen-luarc-json";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    blink-cmp = {
+      url = "github:Saghen/blink.cmp?ref=v0.7.6";
+    };
   };
 
   outputs = inputs @ {

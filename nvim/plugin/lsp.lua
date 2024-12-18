@@ -1,10 +1,10 @@
 local lspconfig = require('lspconfig')
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local blink = require('blink.cmp')
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
 lspconfig.ts_ls.setup {
-  capabilities = capabilities,
+  capabilities = blink.get_lsp_capabilities(),
   settings = {
     complete_function_calls = true,
     typescript = {
