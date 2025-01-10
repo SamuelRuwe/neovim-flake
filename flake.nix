@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    gen-luarc.url = "github:mrcjkb/nix-gen-luarc-json";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
@@ -12,7 +11,6 @@
     self,
     nixpkgs,
     flake-utils,
-    gen-luarc,
     neovim-nightly-overlay,
     ...
   }: let
@@ -33,7 +31,6 @@
         overlays = [
           neovim-nightly
           neovim-overlay
-          gen-luarc.overlays.default
         ];
       };
       shell = pkgs.mkShell {
@@ -44,9 +41,6 @@
           stylua
           luajitPackages.luacheck
         ];
-        shellHook = ''
-          ln -fs ${pkgs.nvim-luarc-json} .luarc.json
-        '';
       };
     in {
       packages = rec {
