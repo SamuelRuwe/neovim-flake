@@ -1,6 +1,10 @@
+local v = vim.keymap.set
+
 local function augroup(name)
   return vim.api.nvim_create_augroup('sam' .. name, { clear = true })
 end
+
+local SamsGroup = augroup('SamsGroup')
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = augroup('highlight_yank'),
@@ -40,5 +44,16 @@ vim.api.nvim_create_autocmd('FileType', {
         desc = 'Quit buffer',
       })
     end)
+  end,
+})
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = SamsGroup,
+  callback = function(e)
+    local opts = { buffer = e.buf }
+    v({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { buffer = opts.buffer, desc = 'codeAction' })
+    v('n', '<leader>cc', vim.lsp.codelens.run, { buffer = opts.buffer, desc = 'codeLens' })
+    v({ 'n', 'v' }, '<leader>cr', vim.lsp.buf.rename, { buffer = opts.buffer, desc = 'rename' })
+    v({ 'n', 'v' }, '<leader>cl', '<cmd>LspInfo<cr>', { buffer = opts.buffer, desc = 'Lsp Info' })
   end,
 })
