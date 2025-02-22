@@ -35,6 +35,10 @@ lspconfig.lua_ls.setup {
   },
 }
 
+lspconfig.pyright.setup {
+  capabilities = blink.get_lsp_capabilities(),
+}
+
 lspconfig.hls.setup {
   filetypes = { 'haskell', 'lhaskell', 'cabal' },
 }
