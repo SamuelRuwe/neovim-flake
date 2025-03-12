@@ -51,9 +51,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
   group = SamsGroup,
   callback = function(e)
     local opts = { buffer = e.buf }
-    v({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { buffer = opts.buffer, desc = 'codeAction' })
-    v('n', '<leader>cc', vim.lsp.codelens.run, { buffer = opts.buffer, desc = 'codeLens' })
-    v({ 'n', 'v' }, '<leader>cr', vim.lsp.buf.rename, { buffer = opts.buffer, desc = 'rename' })
-    v({ 'n', 'v' }, '<leader>cl', '<cmd>LspInfo<cr>', { buffer = opts.buffer, desc = 'Lsp Info' })
+    v({ 'n', 'v' }, '<leader>va', vim.lsp.buf.code_action, { buffer = opts.buffer, desc = 'codeAction' })
+    v('n', '<leader>vc', vim.lsp.codelens.run, { buffer = opts.buffer, desc = 'codeLens' })
+    v({ 'n', 'v' }, '<leader>vn', vim.lsp.buf.rename, { buffer = opts.buffer, desc = 'rename' })
+    v({ 'n', 'v' }, '<leader>vl', '<cmd>LspInfo<cr>', { buffer = opts.buffer, desc = 'Lsp Info' })
+    v({ 'n' }, '<leader>vd', vim.diagnostic.open_float, { buffer = opts.buffer, desc = 'Lsp Info' })
+    v({ 'n', 'v' }, '<leader>vr', vim.lsp.buf.references, { buffer = opts.buffer, desc = 'references' })
   end,
 })

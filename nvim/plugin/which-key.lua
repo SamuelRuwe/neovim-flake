@@ -1,9 +1,9 @@
 local opts = {
-	plugins = { spelling = true },
-	defaults = {
-		mode = { "n", "v" },
-	},
+  plugins = { spelling = true },
+  defaults = {
+    mode = { 'n', 'v' },
+  },
 }
-local wk = require("which-key")
+local wk = require('which-key')
 wk.setup(opts)
 wk.add(opts.defaults)
