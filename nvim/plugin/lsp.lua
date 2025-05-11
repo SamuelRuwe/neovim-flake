@@ -1,4 +1,3 @@
-local lspconfig = require('lspconfig')
 local blink = require('blink.cmp')
 
 blink.setup {
@@ -6,25 +5,28 @@ blink.setup {
     ghost_text = {
       enabled = true,
     },
+    accept = { auto_brackets = { enabled = true } },
+    menu = {
+      draw = {
+        columns = {
+          { 'label', 'label_description', gap = 1 },
+          { 'kind_icon' },
+        },
+      },
+    },
   },
   appearance = {
     nerd_font_variant = 'mono',
   },
   sources = {
-    default = { 'lazydev', 'lsp', 'path', 'buffer' },
-    providers = {
-      lazydev = {
-        name = 'lazydev',
-        module = 'lazydev.integrations.blink',
-        score_offset = 100,
-      },
-    },
+    default = { 'lsp', 'path' },
   },
 }
 
-vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+vim.lsp.enable('ts_ls')
+vim.lsp.enable('lua_ls')
 
-lspconfig.ts_ls.setup {
+vim.lsp.config('ts_ls', {
   capabilities = blink.get_lsp_capabilities(),
   settings = {
     complete_function_calls = true,
@@ -43,9 +45,9 @@ lspconfig.ts_ls.setup {
       },
     },
   },
-}
+})
 
-lspconfig.lua_ls.setup {
+vim.lsp.config('lua_ls', {
   capabilities = blink.get_lsp_capabilities(),
   settings = {
     Lua = {
@@ -54,12 +56,34 @@ lspconfig.lua_ls.setup {
       },
     },
   },
-}
+})
 
-lspconfig.pyright.setup {
+vim.lsp.enable('pyright')
+vim.lsp.config('pyright', {
   capabilities = blink.get_lsp_capabilities(),
-}
+})
 
-lspconfig.hls.setup {
+vim.lsp.enable('hls')
+vim.lsp.config('hls', {
   filetypes = { 'haskell', 'lhaskell', 'cabal' },
-}
+})
+
+vim.lsp.enable('nixd')
+vim.lsp.config('nixd', {
+  capabilities = blink.get_lsp_capabilities(),
+  settings = {
+    nixd = {
+      nixpkgs = {
+        expr = 'import <nixpkgs> { }',
+      },
+      formatting = {
+        command = { 'nixfmt' },
+      },
+      options = {
+        home_manager = {
+          expr = '(builtins.getFlake ("~/nixos" + toString ./.)).homeConfigurations."desktop".options',
+        },
+      },
+    },
+  },
+})

@@ -28,7 +28,7 @@ with final.lib; let
     nvim-treesitter.withAllGrammars
     which-key-nvim
     plenary-nvim
-    lazydev-nvim
+    # lazydev-nvim
     luvit-meta
     trouble-nvim
     nui-nvim
